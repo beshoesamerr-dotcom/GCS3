@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منظومة GCS (General Communication System) - المبيعات وعروض الأسعار والمخزن والصيانة</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap');
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+                padding: 0 !important;
+            }
+            .printable-area {
+                box-shadow: none !important;
+                border: none !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header / Navbar (No Print) -->
+    <header class="no-print bg-slate-900 text-white shadow-lg sticky top-0 z-50 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-gradient-to-tr from-amber-500 to-orange-600 p-2.5 rounded-xl font-black text-xl text-white shadow">
+                    GCS
+                </div>
+                <div>
+                    <h1 class="text-base md:text-lg font-black tracking-wide text-white">GCS - General Communication System</h1>
+                    <p class="text-xs text-amber-400 font-semibold">تليفون: 01003145440 | المبيعات • عروض الأسعار • الصيانة • المخزن</p>
+                </div>
+            </div>
+            
+            <!-- Navigation Tabs -->
+            <nav class="flex flex-wrap gap-1 bg-slate-800/80 p-1 rounded-xl text-xs md:text-sm font-bold">
+                <button id="tab-invoice" onclick="switchTab('invoice')" class="px-3 py-2 rounded-lg transition bg-blue-600 text-white shadow">
+                    📄 الفواتير والحسابات
+                </button>
+                <button id="tab-quotation" onclick="switchTab('quotation')" class="px-3 py-2 rounded-lg transition text-slate-300 hover:text-white">
+                    📋 عروض الأسعار
+                </button>
+                <button id="tab-inventory" onclick="switchTab('inventory')" class="px-3 py-2 rounded-lg transition text-slate-300 hover:text-white">
+                    📦 المخزن والتكلفة
+                </button>
+                <button id="tab-maintenance" onclick="switchTab('maintenance')" class="px-3 py-2 rounded-lg transition text-slate-300 hover:text-white">
+                    🛠️ الصيانة والزيارات
+                </button>
+                <button id="tab-accounts" onclick="switchTab('accounts')" class="px-3 py-2 rounded-lg transition text-slate-300 hover:text-white">
+                    📊 الترحيل والتقارير
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6">
+
+        <!-- ==================== SECTION 1: INVOICES ==================== -->
+        <section id="section-invoice" class="space-y-6">
+            
+            <div class="no-print flex flex-wrap justify-between items-center gap-4 bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                <div class="text-slate-600 text-sm font-semibold">
+                    حفظ الفاتورة يقوم بخصم الكميات فوراً من المخزن وتنزيل الأرباح والديون في كشف الحسابات.
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="saveAndPrintInvoice()" class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-bold shadow transition text-sm">
+                        🖨️ حفظ وطباعة الفاتورة
+                    </button>
+                    <button onclick="saveOnlyInvoice()" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-bold shadow transition text-sm">
+                        💾 حفظ في الحسابات
+                    </button>
+                    <button onclick="resetInvoiceForm()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-2 rounded-lg font-bold transition text-sm">
+                        تفريغ
+                    </button>
+                </div>
+            </div>
+
+            <!-- Printable Invoice -->
+            <div id="printable-invoice" class="printable-area bg-white p-6 md:p-10 rounded-xl shadow-md border border-slate-200 max-w-4xl mx-auto">
+                
+                <div class="flex justify-between items-start border-b-2 border-slate-800 pb-5">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="bg-slate-900 text-amber-400 font-black px-2.5 py-0.5 rounded text-lg">GCS</span>
+                            <h2 class="text-xl md:text-2xl font-black text-slate-900">General Communication System (GCS)</h2>
+                        </div>
+                        <p class="text-xs text-slate-600 font-bold">أنظمة أمنية وتكنولوجية • كاميرات مراقبة • أجهزة تسجيل NVR/DVR • إنتركم • بصمة • إنذار</p>
+                        <p class="text-xs font-bold text-blue-700 mt-1">تليفون: 01003145440</p>
+                    </div>
+                    <div class="text-left">
+                        <span class="inline-block bg-slate-900 text-white font-black text-base px-3 py-1 rounded shadow-sm mb-2">
+                            فاتورة مبيعات رسمية
+                        </span>
+                        <div class="text-xs text-slate-600 space-y-0.5">
+                            <p><span class="font-bold">رقم الفاتورة:</span> <span id="inv-number-display" class="font-mono font-extrabold text-red-600">INV-1001</span></p>
+                            <p><span class="font-bold">التاريخ:</span> <input type="date" id="inv-date" class="border-b border-slate-300 focus:outline-none text-xs bg-transparent font-bold"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 my-4 bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs md:text-sm">
+                    <div class="flex items-center gap-2">
+                        <label class="font-bold text-slate-700 whitespace-nowrap">اسم العميل:</label>
+                        <input type="text" id="cust-name" placeholder="أدخل اسم العميل / الشركة" class="w-full bg-white border border-slate-300 rounded px-2.5 py-1 outline-none focus:ring-1 focus:ring-blue-500">
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label class="font-bold text-slate-700 whitespace-nowrap">الهاتف:</label>
+                        <input type="text" id="cust-phone" placeholder="01xxxxxxxxx" class="w-full bg-white border border-slate-300 rounded px-2.5 py-1 outline-none focus:ring-1 focus:ring-blue-500">
+                    </div>
+                    <div class="flex items-center gap-2 md:col-span-2">
+                        <label class="font-bold text-slate-700 whitespace-nowrap">عنوان التركيب:</label>
+                        <input type="text" id="cust-address" placeholder="العنوان التفصيلي لموقع التركيب" class="w-full bg-white border border-slate-300 rounded px-2.5 py-1 outline-none focus:ring-1 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto my-4">
+                    <table class="w-full text-right border-collapse text-xs md:text-sm">
+                        <thead>
+                            <tr class="bg-slate-900 text-white">
+                                <th class="p-2 border border-slate-700 w-10 text-center">#</th>
+                                <th class="p-2 border border-slate-700">الصنف / الموديل</th>
+                                <th class="p-2 border border-slate-700 w-36">الرقم المسلسل (S/N)</th>
+                                <th class="p-2 border border-slate-700 w-16 text-center">الكمية</th>
+                                <th class="p-2 border border-slate-700 w-24 text-center">سعر البيع</th>
+                                <th class="p-2 border border-slate-700 w-28 text-center">الإجمالي</th>
+                                <th class="p-2 border border-slate-700 w-10 text-center no-print">حذف</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoice-items-body">
+                            <!-- Items added dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="no-print mb-4">
+                    <button onclick="addInvoiceRow()" class="bg-slate-100 hover:bg-slate-200 text-blue-800 font-bold px-3 py-1.5 rounded border border-slate-300 text-xs flex items-center gap-1">
+                        ➕ إضافة صنف من المخزن
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-slate-200 text-xs">
+                    <div class="space-y-2 bg-slate-50 p-3 rounded border border-slate-200">
+                        <h4 class="font-bold text-slate-800 border-b pb-1">مصاريف الخدمات والتركيب</h4>
+                        <div class="flex justify-between items-center">
+                            <span>أسلاك وإكسسوارات (كابلات/باور):</span>
+                            <input type="number" id="cost-cables" value="0" oninput="calculateTotals()" class="w-24 text-left bg-white border border-slate-300 rounded px-1.5 py-0.5 outline-none font-bold">
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>أجور التركيب والبرمجة:</span>
+                            <input type="number" id="cost-installation" value="0" oninput="calculateTotals()" class="w-24 text-left bg-white border border-slate-300 rounded px-1.5 py-0.5 outline-none font-bold">
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>اسم الفني المسؤول:</span>
+                            <input type="text" id="tech-name" placeholder="اسم الفني" class="w-32 bg-white border border-slate-300 rounded px-1.5 py-0.5 outline-none">
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5 bg-slate-50 p-3 rounded border border-slate-200">
+                        <div class="flex justify-between">
+                            <span>إجمالي الأجهزة:</span>
+                            <span id="sum-devices" class="font-bold">0.00 ج.م</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>إجمالي الخدمات والملحقات:</span>
+                            <span id="sum-services" class="font-bold">0.00 ج.م</span>
+                        </div>
+                        <div class="flex justify-between text-sm font-extrabold text-slate-900 border-t pt-1">
+                            <span>الإجمالي الكلي:</span>
+                            <span id="sum-grand-total" class="text-blue-700">0.00 ج.م</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-1 border-t">
+                            <label class="font-bold text-emerald-800">المبلغ المدفوع:</label>
+                            <input type="number" id="paid-amount" value="0" oninput="calculateTotals()" class="w-28 text-left bg-emerald-50 border border-emerald-400 font-bold text-emerald-800 rounded px-1 py-0.5 outline-none">
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <label class="font-bold text-red-700">المبلغ المتبقي:</label>
+                            <span id="remaining-amount" class="font-extrabold text-red-600">0.00 ج.م</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-3 border-t border-slate-200 text-[11px] text-slate-500 space-y-1">
+                    <p class="font-bold text-slate-700">• شروط الضمان: الضمان عام كامل ضد عيوب التصنيع مع وجود السيريال S/N واضحاً، ولا يشمل التلف الكهربائي أو سوء الاستخدام.</p>
+                    <div class="flex justify-between items-end mt-6 pt-4">
+                        <div class="text-center w-36">
+                            <p class="font-bold text-slate-800">توقيع المستلم</p>
+                            <p class="text-slate-400 mt-4">............................</p>
+                        </div>
+                        <div class="text-center w-40">
+                            <p class="font-bold text-slate-800">اعتماد شركة GCS - General Communication System</p>
+                            <p class="text-slate-400 mt-4">............................</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 2: QUOTATIONS ==================== -->
+        <section id="section-quotation" class="hidden space-y-6">
+            <div class="no-print flex flex-wrap justify-between items-center gap-4 bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                <div class="text-slate-600 text-sm font-semibold">
+                    إنشاء عرض سعر رسمي موجه للعميل بشروط التوريد والتركيب، مع إمكانية تحويله مباشرة إلى فاتورة مبيعات.
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="printQuotation()" class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-bold shadow transition text-sm">
+                        🖨️ طباعة عرض السعر
+                    </button>
+                    <button onclick="convertQuotationToInvoice()" class="flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg font-bold shadow transition text-sm">
+                        🔄 تحويل العرض إلى فاتورة مبيعات
+                    </button>
+                    <button onclick="resetQuotationForm()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-2 rounded-lg font-bold transition text-sm">
+                        تفريغ
+                    </button>
+                </div>
+            </div>
+
+            <!-- Printable Quotation Form -->
+            <div id="printable-quotation" class="printable-area bg-white p-6 md:p-10 rounded-xl shadow-md border border-slate-200 max-w-4xl mx-auto">
+                <div class="flex justify-between items-start border-b-2 border-amber-600 pb-5">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="bg-amber-500 text-slate-900 font-black px-2.5 py-0.5 rounded text-lg">GCS</span>
+                            <h2 class="text-xl md:text-2xl font-black text-slate-900">General Communication System (GCS)</h2>
+                        </div>
+                        <p class="text-xs text-slate-600 font-bold">عروض أسعار ودراسات هندسية للأنظمة الأمنية والشبكات</p>
+                        <p class="text-xs font-bold text-amber-600 mt-1">تليفون: 01003145440</p>
+                    </div>
+                    <div class="text-left">
+                        <span class="inline-block bg-amber-500 text-slate-950 font-black text-base px-3 py-1 rounded shadow-sm mb-2">
+                            عرض سعر توريد وتركيب
+                        </span>
+                        <div class="text-xs text-slate-600 space-y-0.5">
+                            <p><span class="font-bold">رقم العرض:</span> <span id="quote-number-display" class="font-mono font-extrabold text-blue-700">QT-8001</span></p>
+                            <p><span class="font-bold">التاريخ:</span> <input type="date" id="quote-date" class="border-b border-slate-300 focus:outline-none text-xs bg-transparent font-bold"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 my-4 bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs md:text-sm">
+                    <div class="flex items-center gap-2">
+                        <label class="font-bold text-slate-700 whitespace-nowrap">السادة / شركة:</label>
+                        <input type="text" id="quote-cust-name" placeholder="اسم الجهة أو العميل الموجه له العرض" class="w-full bg-white border border-slate-300 rounded px-2.5 py-1 outline-none">
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label class="font-bold text-slate-700 whitespace-nowrap">الهاتف:</label>
+                        <input type="text" id="quote-cust-phone" placeholder="01xxxxxxxxx" class="w-full bg-white border border-slate-300 rounded px-2.5 py-1 outline-none">
+                    </div>
+                    <div class="flex items-center gap-2 md:col-span-2">
+                        <label class="font-bold text-slate-700 whitespace-nowrap">الموقع المستهدف:</label>
+                        <input type="text" id="quote-cust-address" placeholder="عنوان موقع التركيب المقترح" class="w-full bg-white border border-slate-300 rounded px-2.5 py-1 outline-none">
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto my-4">
+                    <table class="w-full text-right border-collapse text-xs md:text-sm">
+                        <thead>
+                            <tr class="bg-amber-600 text-slate-950 font-bold">
+                                <th class="p-2 border border-amber-700 w-10 text-center">#</th>
+                                <th class="p-2 border border-amber-700">بيان الأجهزة والمواصفات الفنية</th>
+                                <th class="p-2 border border-amber-700 w-20 text-center">الكمية</th>
+                                <th class="p-2 border border-amber-700 w-28 text-center">سعر الفردي</th>
+                                <th class="p-2 border border-amber-700 w-32 text-center">الإجمالي</th>
+                                <th class="p-2 border border-amber-700 w-10 text-center no-print">حذف</th>
+                            </tr>
+                        </thead>
+                        <tbody id="quote-items-body">
+                            <!-- Items added dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="no-print mb-4">
+                    <button onclick="addQuoteRow()" class="bg-amber-50 hover:bg-amber-100 text-amber-900 font-bold px-3 py-1.5 rounded border border-amber-300 text-xs flex items-center gap-1">
+                        ➕ إضافة بند لعرض السعر
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-slate-200 text-xs">
+                    <div class="space-y-2 bg-slate-50 p-3 rounded border border-slate-200">
+                        <h4 class="font-bold text-slate-800 border-b pb-1">خدمات وأعمال التأسيس</h4>
+                        <div class="flex justify-between items-center">
+                            <span>تكلفة التأسيس والأسلاك والمستلزمات:</span>
+                            <input type="number" id="quote-cables" value="0" oninput="calculateQuoteTotals()" class="w-24 text-left bg-white border border-slate-300 rounded px-1.5 py-0.5 outline-none font-bold">
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>أجور المصنعيات والتركيب والبرمجة:</span>
+                            <input type="number" id="quote-installation" value="0" oninput="calculateQuoteTotals()" class="w-24 text-left bg-white border border-slate-300 rounded px-1.5 py-0.5 outline-none font-bold">
+                        </div>
+                    </div>
+
+                    <div class="space-y-1 bg-amber-50/50 p-3 rounded border border-amber-200">
+                        <div class="flex justify-between">
+                            <span>إجمالي التوريدات:</span>
+                            <span id="quote-sum-devices" class="font-bold">0.00 ج.م</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>إجمالي التركيبات والملحقات:</span>
+                            <span id="quote-sum-services" class="font-bold">0.00 ج.م</span>
+                        </div>
+                        <div class="flex justify-between text-sm font-black text-slate-900 border-t border-amber-300 pt-1">
+                            <span>الإجمالي التقديري للعرض:</span>
+                            <span id="quote-sum-grand" class="text-amber-800">0.00 ج.م</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms and Conditions -->
+                <div class="mt-4 pt-3 border-t border-slate-200 text-[11px] text-slate-600 space-y-1">
+                    <p class="font-bold text-slate-800">شروط وأحكام عرض السعر:</p>
+                    <p>• مدة سريان هذا العرض 15 يوماً من تاريخ إصداره.</p>
+                    <p>• فترة التوريد والتركيب خلال 3 إلى 5 أيام عمل من تاريخ الاتفاق والدفعة المقدمة.</p>
+                    <p>• فترة الضمان: عام كامل ضد عيوب التصنيع مع دعم فني مجاني لمدة شهر من التشغيل.</p>
+                    
+                    <div class="flex justify-between items-end mt-6 pt-4">
+                        <div class="text-center w-36">
+                            <p class="font-bold text-slate-800">موافقة العميل</p>
+                            <p class="text-slate-400 mt-4">............................</p>
+                        </div>
+                        <div class="text-center w-40">
+                            <p class="font-bold text-slate-800">اعتماد GCS - General Communication System</p>
+                            <p class="text-slate-400 mt-4">............................</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 3: INVENTORY ==================== -->
+        <section id="section-inventory" class="hidden space-y-6">
+            <div class="flex flex-wrap justify-between items-center gap-4 bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                <div>
+                    <h3 class="font-bold text-lg text-slate-800">مخزن شركة GCS - General Communication System</h3>
+                    <p class="text-xs text-slate-500">تابع حركة المخزون وأسعار الشراء لضمان حساب أرباح الفواتير بدقة.</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="resetToFullDefaultInventory()" class="bg-red-600 hover:bg-red-700 text-white font-bold px-3 py-2 rounded-lg text-xs flex items-center gap-1 shadow">
+                        ⚡ إعادة تحميل وتحديث مخزن GCS الكامل
+                    </button>
+                    <button onclick="openAddProductModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded-lg text-sm flex items-center gap-2 shadow">
+                        ➕ إضافة منتج جديد للمخزن
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <p class="text-xs font-bold text-slate-500">عدد الأصناف بالمخزن</p>
+                    <h4 id="inv-total-items-count" class="text-2xl font-black text-slate-800 mt-1">0 صنف</h4>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <p class="text-xs font-bold text-slate-500">قيمة البضاعة بالتكلفة (سعر الشراء)</p>
+                    <h4 id="inv-total-cost-val" class="text-2xl font-black text-blue-700 mt-1">0.00 ج.م</h4>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <p class="text-xs font-bold text-slate-500">أصناف أوشكت على النفاد</p>
+                    <h4 id="inv-low-stock-count" class="text-2xl font-black text-amber-600 mt-1">0 صنف</h4>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-4 bg-slate-50 border-b border-slate-200 flex flex-wrap justify-between items-center gap-2">
+                    <div class="flex items-center gap-3">
+                        <h4 class="font-bold text-slate-800">جدول المنتجات والأسعار المعتمدة</h4>
+                        <select id="inv-category-filter" onchange="renderInventoryTable()" class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs font-bold outline-none">
+                            <option value="all">📁 جميع التصنيفات</option>
+                            <option value="كاميرات مراقبة">📹 كاميرات مراقبة</option>
+                            <option value="أجهزة تسجيل NVR/DVR">📼 أجهزة تسجيل NVR/DVR</option>
+                            <option value="سنترالات وهواتف">📞 سنترالات وهواتف</option>
+                            <option value="أجهزة بصمة">👆 أجهزة بصمة وتواجد</option>
+                            <option value="أنظمة إنتركم">🔔 أنظمة إنتركم</option>
+                            <option value="أنظمة صوتية">🔊 أنظمة صوتية وإذاعة</option>
+                            <option value="كمبيوتر وشاشات">🖥️ كمبيوتر وشاشات</option>
+                            <option value="أسلاك وملحقات">🔌 أسلاك وشبكات وملحقات</option>
+                        </select>
+                    </div>
+                    <input type="text" id="inv-search" onkeyup="renderInventoryTable()" placeholder="بحث باسم الصنف أو الكود..." class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs outline-none w-60">
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right text-xs md:text-sm">
+                        <thead class="bg-slate-900 text-white text-xs">
+                            <tr>
+                                <th class="p-3 border-b">كود الصنف</th>
+                                <th class="p-3 border-b">اسم الصنف / الموديل</th>
+                                <th class="p-3 border-b">التصنيف</th>
+                                <th class="p-3 border-b">سعر الشراء (التكلفة)</th>
+                                <th class="p-3 border-b">سعر البيع</th>
+                                <th class="p-3 border-b">هامش الربح</th>
+                                <th class="p-3 border-b text-center">الكمية</th>
+                                <th class="p-3 border-b text-center">الحالة</th>
+                                <th class="p-3 border-b text-center">تعديل / حذف</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-table-body" class="divide-y divide-slate-200">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 4: MAINTENANCE ==================== -->
+        <section id="section-maintenance" class="hidden space-y-6">
+            <div class="flex flex-wrap justify-between items-center gap-4 bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                <div>
+                    <h3 class="font-bold text-lg text-slate-800">قسم الصيانة والزيارات الميدانية - GCS</h3>
+                    <p class="text-xs text-slate-500">تسجيل أوامر الدعم الفني والزيارات وطباعة التقرير الفني للعميل.</p>
+                </div>
+                <button onclick="openAddMaintenanceModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-lg text-sm flex items-center gap-2 shadow">
+                    🛠️ تسجيل أمر زيارة / صيانة
+                </button>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-4 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
+                    <h4 class="font-bold text-slate-800">جدول الزيارات والصيانة</h4>
+                    <input type="text" id="maint-search" onkeyup="renderMaintenanceTable()" placeholder="بحث باسم العميل أو الفني..." class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs outline-none w-60">
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right text-xs md:text-sm">
+                        <thead class="bg-slate-900 text-white text-xs">
+                            <tr>
+                                <th class="p-3 border-b">رقم الطلب</th>
+                                <th class="p-3 border-b">التاريخ</th>
+                                <th class="p-3 border-b">العميل</th>
+                                <th class="p-3 border-b">الفني المسؤول</th>
+                                <th class="p-3 border-b">العطل / العرض</th>
+                                <th class="p-3 border-b">الضمان</th>
+                                <th class="p-3 border-b">التكلفة</th>
+                                <th class="p-3 border-b text-center">طباعة الأورنيك</th>
+                            </tr>
+                        </thead>
+                        <tbody id="maintenance-table-body" class="divide-y divide-slate-200">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Maintenance Report Printable -->
+            <div id="printable-maintenance-report" class="hidden printable-area bg-white p-8 rounded-xl border border-slate-300 max-w-4xl mx-auto">
+                <div class="flex justify-between items-start border-b-2 border-slate-900 pb-4 mb-4">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="bg-slate-900 text-amber-400 font-black px-2 py-0.5 rounded text-base">GCS</span>
+                            <h2 class="text-xl font-bold text-slate-900">GCS - General Communication System (أورنيك صيانة)</h2>
+                        </div>
+                        <p class="text-xs text-blue-700 font-bold">تليفون الدعم والصيانة: 01003145440</p>
+                    </div>
+                    <div class="text-left">
+                        <p class="font-mono font-bold text-red-600 text-sm" id="p-maint-id">MAINT-5001</p>
+                        <p class="text-xs text-slate-500" id="p-maint-date">التاريخ: 2026-11-04</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 text-xs bg-slate-50 p-3 rounded mb-4 border border-slate-200">
+                    <p><span class="font-bold">اسم العميل:</span> <span id="p-maint-cust"></span></p>
+                    <p><span class="font-bold">الهاتف:</span> <span id="p-maint-phone"></span></p>
+                    <p class="col-span-2"><span class="font-bold">موقع الزيارة:</span> <span id="p-maint-address"></span></p>
+                    <p><span class="font-bold">الفني المسؤول:</span> <span id="p-maint-tech"></span></p>
+                    <p><span class="font-bold">حالة الضمان:</span> <span id="p-maint-warranty"></span></p>
+                </div>
+
+                <div class="space-y-3 text-xs mb-6">
+                    <div class="border p-2.5 rounded">
+                        <p class="font-bold text-slate-800 mb-1">سبب الزيارة ووصف العطل:</p>
+                        <p id="p-maint-reason" class="text-slate-700"></p>
+                    </div>
+                    <div class="border p-2.5 rounded">
+                        <p class="font-bold text-slate-800 mb-1">الأجهزة وسيريال الأجهزة (S/N):</p>
+                        <p id="p-maint-sn" class="font-mono text-slate-700"></p>
+                    </div>
+                    <div class="border p-2.5 rounded">
+                        <p class="font-bold text-slate-800 mb-1">المستلزمات وقطع الغيار المستهلكة:</p>
+                        <p id="p-maint-parts" class="text-slate-700"></p>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center bg-slate-100 p-3 rounded text-sm font-bold border border-slate-300 mb-8">
+                    <span>إجمالي حساب الصيانة والقطع:</span>
+                    <span id="p-maint-total" class="text-blue-700">0.00 ج.م</span>
+                </div>
+
+                <div class="flex justify-between text-xs pt-6 border-t border-slate-300">
+                    <div class="text-center w-36">
+                        <p class="font-bold">توقيع مهندس الصيانة</p>
+                        <p class="mt-6 text-slate-400">........................</p>
+                    </div>
+                    <div class="text-center w-36">
+                        <p class="font-bold">توقيع واستلام العميل</p>
+                        <p class="mt-6 text-slate-400">........................</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 5: ACCOUNTS ==================== -->
+        <section id="section-accounts" class="hidden space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <p class="text-xs font-bold text-slate-500">إجمالي المبيعات</p>
+                    <h3 id="dash-total-sales" class="text-2xl font-black text-slate-800 mt-1">0.00 ج.م</h3>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <p class="text-xs font-bold text-slate-500">المحصل نقدياً (الخزينة)</p>
+                    <h3 id="dash-total-paid" class="text-2xl font-black text-emerald-600 mt-1">0.00 ج.م</h3>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <p class="text-xs font-bold text-slate-500">الديون والمتبقي للشركة</p>
+                    <h3 id="dash-total-remaining" class="text-2xl font-black text-red-600 mt-1">0.00 ج.م</h3>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-sm">
+                    <p class="text-xs font-bold text-blue-800">صافي الأرباح المقدرة</p>
+                    <h3 id="dash-net-profit" class="text-2xl font-black text-blue-700 mt-1">0.00 ج.م</h3>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-4 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
+                    <h3 class="font-bold text-slate-800">أرشيف الفواتير وكشف الحسابات</h3>
+                    <input type="text" id="search-input" onkeyup="renderAccountsTable()" placeholder="بحث باسم العميل أو رقم الفاتورة..." class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs outline-none w-60">
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right text-xs md:text-sm">
+                        <thead class="bg-slate-900 text-white text-xs">
+                            <tr>
+                                <th class="p-3 border-b">رقم الفاتورة</th>
+                                <th class="p-3 border-b">التاريخ</th>
+                                <th class="p-3 border-b">العميل</th>
+                                <th class="p-3 border-b">إجمالي الفاتورة</th>
+                                <th class="p-3 border-b">المدفوع</th>
+                                <th class="p-3 border-b">المتبقي</th>
+                                <th class="p-3 border-b">صافي الربح</th>
+                                <th class="p-3 border-b text-center">حذف</th>
+                            </tr>
+                        </thead>
+                        <tbody id="accounts-table-body" class="divide-y divide-slate-200">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL 1: ADD / EDIT INVENTORY ITEM -->
+    <div id="modal-product" class="fixed inset-0 bg-slate-900/60 hidden flex justify-center items-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-md w-full p-5 space-y-4">
+            <h3 id="modal-product-title" class="text-base font-bold text-slate-800 border-b pb-2">إضافة / تعديل صنف في المخزن</h3>
+            <input type="hidden" id="prod-edit-index" value="-1">
+            <div class="space-y-3 text-xs md:text-sm">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">كود الصنف:</label>
+                    <input type="text" id="prod-code" placeholder="CAM-10" class="w-full border border-slate-300 rounded p-2 outline-none font-mono">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">اسم الصنف / الموديل:</label>
+                    <input type="text" id="prod-name" placeholder="أدخل اسم الموديل أو الصنف" class="w-full border border-slate-300 rounded p-2 outline-none">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">التصنيف الرئيسي:</label>
+                    <select id="prod-category" class="w-full border border-slate-300 rounded p-2 outline-none font-bold">
+                        <option value="كاميرات مراقبة">📹 كاميرات مراقبة</option>
+                        <option value="أجهزة تسجيل NVR/DVR">📼 أجهزة تسجيل NVR/DVR</option>
+                        <option value="سنترالات وهواتف">📞 سنترالات وهواتف</option>
+                        <option value="أجهزة بصمة">👆 أجهزة بصمة وتواجد</option>
+                        <option value="أنظمة إنتركم">🔔 أنظمة إنتركم</option>
+                        <option value="أنظمة صوتية">🔊 أنظمة صوتية وإذاعة</option>
+                        <option value="كمبيوتر وشاشات">🖥️ كمبيوتر وشاشات</option>
+                        <option value="أسلاك وملحقات">🔌 أسلاك وشبكات وملحقات</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">سعر الشراء (التكلفة):</label>
+                        <input type="number" id="prod-cost" value="0" class="w-full border border-slate-300 rounded p-2 outline-none font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">سعر البيع للعميل:</label>
+                        <input type="number" id="prod-price" value="0" class="w-full border border-slate-300 rounded p-2 outline-none font-bold text-blue-700">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">الكمية بالمخزن:</label>
+                        <input type="number" id="prod-stock" value="10" class="w-full border border-slate-300 rounded p-2 outline-none font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">حد إعادة الطلب:</label>
+                        <input type="number" id="prod-min" value="3" class="w-full border border-slate-300 rounded p-2 outline-none">
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 border-t pt-3">
+                <button onclick="closeProductModal()" class="px-4 py-1.5 bg-slate-200 text-slate-700 rounded font-bold text-xs">إلغاء</button>
+                <button onclick="saveProductItem()" class="px-4 py-1.5 bg-emerald-600 text-white rounded font-bold text-xs hover:bg-emerald-700 shadow">حفظ التغييرات</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: ADD MAINTENANCE -->
+    <div id="modal-maintenance" class="fixed inset-0 bg-slate-900/60 hidden flex justify-center items-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-lg w-full p-5 space-y-4 max-h-[90vh] overflow-y-auto">
+            <h3 class="text-base font-bold text-slate-800 border-b pb-2">تسجيل أمر زيارة صيانة ميدانية</h3>
+            <div class="space-y-3 text-xs md:text-sm">
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">اسم العميل:</label>
+                        <input type="text" id="maint-cust-name" class="w-full border border-slate-300 rounded p-2 outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">رقم الهاتف:</label>
+                        <input type="text" id="maint-cust-phone" class="w-full border border-slate-300 rounded p-2 outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">العنوان:</label>
+                    <input type="text" id="maint-cust-addr" class="w-full border border-slate-300 rounded p-2 outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">الفني المسؤول:</label>
+                        <input type="text" id="maint-tech" class="w-full border border-slate-300 rounded p-2 outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">حالة الضمان:</label>
+                        <select id="maint-warranty" class="w-full border border-slate-300 rounded p-2 outline-none">
+                            <option value="داخل الضمان">داخل الضمان</option>
+                            <option value="خارج الضمان">خارج الضمان</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">سبب الزيارة ووصف المشكلة:</label>
+                    <textarea id="maint-reason" rows="2" class="w-full border border-slate-300 rounded p-2 outline-none"></textarea>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">السيريال نمبر (S/N):</label>
+                    <input type="text" id="maint-sn" placeholder="SN-12345" class="w-full border border-slate-300 rounded p-2 outline-none font-mono text-xs">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">قطع مستهلكة:</label>
+                        <input type="text" id="maint-parts" placeholder="باور 12V" class="w-full border border-slate-300 rounded p-2 outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">إجمالي التكلفة (ج.م):</label>
+                        <input type="number" id="maint-cost" value="0" class="w-full border border-slate-300 rounded p-2 outline-none">
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 border-t pt-3">
+                <button onclick="closeMaintenanceModal()" class="px-4 py-1.5 bg-slate-200 text-slate-700 rounded font-bold text-xs">إلغاء</button>
+                <button onclick="saveMaintenanceOrder()" class="px-4 py-1.5 bg-blue-600 text-white rounded font-bold text-xs hover:bg-blue-700">حفظ الأمر</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Default GCS Stock - Extended Comprehensive Categories & Items for Companies & Enterprises
+        const initialInventory = [
+            // --- كاميرات مراقبة وأجهزة تسجيل وهاردات المراقبة ---
+            { code: 'CAM-01', name: 'Hikvision 2MP Outdoor Bullet Camera (HD)', category: 'كاميرات مراقبة', cost: 550, price: 850, stock: 25, minStock: 5 },
+            { code: 'CAM-02', name: 'Hikvision 5MP Smart Hybrid Light Dome', category: 'كاميرات مراقبة', cost: 850, price: 1250, stock: 20, minStock: 5 },
+            { code: 'CAM-03', name: 'Dahua 4MP IP Camera PoE ColorVu', category: 'كاميرات مراقبة', cost: 1100, price: 1600, stock: 15, minStock: 4 },
+            { code: 'CAM-04', name: 'Dahua 8MP 4K IP PTZ Speed Dome Camera (Auto Tracking)', category: 'كاميرات مراقبة', cost: 6500, price: 8900, stock: 3, minStock: 1 },
+            { code: 'DVR-01', name: 'Hikvision 4-Channel DVR 1080p', category: 'أجهزة تسجيل NVR/DVR', cost: 1300, price: 1850, stock: 10, minStock: 2 },
+            { code: 'DVR-02', name: 'Hikvision 8-Channel DVR AcuSense 4K', category: 'أجهزة تسجيل NVR/DVR', cost: 2100, price: 2950, stock: 8, minStock: 2 },
+            { code: 'DVR-03', name: 'Dahua 16-Channel DVR WizSense', category: 'أجهزة تسجيل NVR/DVR', cost: 3400, price: 4700, stock: 6, minStock: 2 },
+            { code: 'NVR-01', name: 'Dahua 8-Channel 4K NVR PoE', category: 'أجهزة تسجيل NVR/DVR', cost: 3100, price: 4200, stock: 5, minStock: 2 },
+            { code: 'NVR-02', name: 'Hikvision 32-Channel NVR 4-HDDs Enterprise', category: 'أجهزة تسجيل NVR/DVR', cost: 8500, price: 11500, stock: 2, minStock: 1 },
+            { code: 'NVR-03', name: 'Hikvision 64-Channel Enterprise NVR 8-HDDs RAID', category: 'أجهزة تسجيل NVR/DVR', cost: 18500, price: 24000, stock: 2, minStock: 1 },
+            { code: 'HDD-01', name: 'Western Digital Purple 1TB Surveillance HDD', category: 'أجهزة تسجيل NVR/DVR', cost: 1400, price: 1850, stock: 15, minStock: 4 },
+            { code: 'HDD-02', name: 'Western Digital Purple 2TB Surveillance HDD', category: 'أجهزة تسجيل NVR/DVR', cost: 2100, price: 2700, stock: 12, minStock: 3 },
+            { code: 'HDD-03', name: 'Western Digital Purple 4TB Surveillance HDD', category: 'أجهزة تسجيل NVR/DVR', cost: 3600, price: 4500, stock: 8, minStock: 2 },
+            { code: 'HDD-04', name: 'Western Digital Purple 6TB Surveillance Enterprise HDD', category: 'أجهزة تسجيل NVR/DVR', cost: 5800, price: 7200, stock: 5, minStock: 2 },
+
+            // --- السنترالات والتليفونات الأرضية و IP Phones للشركات ---
+            { code: 'PBX-01', name: 'Panasonic KX-TES824 PBX System (3 Lines / 8 Ext)', category: 'سنترالات وهواتف', cost: 8500, price: 11500, stock: 3, minStock: 1 },
+            { code: 'PBX-02', name: 'Panasonic KX-NS500 Smart IP PBX System Enterprise', category: 'سنترالات وهواتف', cost: 28000, price: 36000, stock: 2, minStock: 1 },
+            { code: 'PBX-03', name: 'Grandstream UCM6202 / UCM6302 IP PBX System', category: 'سنترالات وهواتف', cost: 12000, price: 15800, stock: 2, minStock: 1 },
+            { code: 'TEL-01', name: 'Panasonic KX-TS500 Corded Desk Phone', category: 'سنترالات وهواتف', cost: 550, price: 800, stock: 30, minStock: 8 },
+            { code: 'TEL-02', name: 'Panasonic Cordless Phone Dect 6.0', category: 'سنترالات وهواتف', cost: 1200, price: 1650, stock: 10, minStock: 3 },
+            { code: 'TEL-03', name: 'Panasonic Master Digital Display Phone (هاتف مميز للسكرتارية)', category: 'سنترالات وهواتف', cost: 2200, price: 2950, stock: 6, minStock: 2 },
+            { code: 'IPT-01', name: 'Grandstream GXP1611 IP Phone', category: 'سنترالات وهواتف', cost: 1150, price: 1600, stock: 15, minStock: 4 },
+            { code: 'IPT-02', name: 'Yealink SIP-T31P HD IP Phone PoE', category: 'سنترالات وهواتف', cost: 1450, price: 1950, stock: 12, minStock: 3 },
+            { code: 'IPT-03', name: 'Yealink Executive Gigabit IP Phone with Screen', category: 'سنترالات وهواتف', cost: 3200, price: 4200, stock: 5, minStock: 2 },
+
+            // --- أجهزة كمبيوتر وسيرفرات وشاشات وملحقات المكتب ---
+            { code: 'PC-01', name: 'Dell OptiPlex Workstation i5 / 16GB RAM / SSD', category: 'كمبيوتر وشاشات', cost: 7500, price: 9800, stock: 6, minStock: 2 },
+            { code: 'PC-02', name: 'HP ProDesk Mini PC i7 / 16GB / 512GB SSD', category: 'كمبيوتر وشاشات', cost: 9500, price: 12200, stock: 4, minStock: 1 },
+            { code: 'MON-01', name: 'Hikvision 19-inch Commercial Monitor', category: 'كمبيوتر وشاشات', cost: 1800, price: 2400, stock: 10, minStock: 3 },
+            { code: 'MON-02', name: 'Hikvision 22-inch Full HD Surveillance Monitor', category: 'كمبيوتر وشاشات', cost: 2600, price: 3400, stock: 8, minStock: 2 },
+            { code: 'MON-03', name: 'Samsung / LG 32-inch LED TV & Monitor', category: 'كمبيوتر وشاشات', cost: 4200, price: 5500, stock: 5, minStock: 2 },
+            { code: 'MON-04', name: 'Hikvision 43-inch 4K Commercial Display Screen', category: 'كمبيوتر وشاشات', cost: 8900, price: 11500, stock: 3, minStock: 1 },
+            { code: 'ACC-01', name: 'Logitech USB Wired Keyboard & Mouse Combo', category: 'كمبيوتر وشاشات', cost: 350, price: 500, stock: 25, minStock: 5 },
+            { code: 'ACC-02', name: 'A4Tech Wireless Keyboard & Mouse Combo', category: 'كمبيوتر وشاشات', cost: 550, price: 780, stock: 15, minStock: 4 },
+
+            // --- أجهزة بصمة، حضور وانصراف، وإنتركم للشركات ---
+            { code: 'BIO-01', name: 'ZKTeco Time Attendance Fingerprint & Password (K40)', category: 'أجهزة بصمة', cost: 1800, price: 2600, stock: 10, minStock: 3 },
+            { code: 'BIO-02', name: 'ZKTeco Face & Fingerprint Time Attendance (MB20)', category: 'أجهزة بصمة', cost: 2800, price: 3900, stock: 8, minStock: 2 },
+            { code: 'BIO-03', name: 'ZKTeco Access Control with Magnetic Lock & Exit Button', category: 'أجهزة بصمة', cost: 3500, price: 4800, stock: 5, minStock: 2 },
+            { code: 'INT-01', name: 'Dahua IP Video Intercom Villa Kit (Touch Screen)', category: 'أنظمة إنتركم', cost: 4200, price: 5800, stock: 4, minStock: 1 },
+            { code: 'INT-02', name: 'Multi-Apartment / Office Intercom Audio System', category: 'أنظمة إنتركم', cost: 3100, price: 4200, stock: 3, minStock: 1 },
+
+            // --- أنظمة صوتية وإذاعة داخلية للمصانع والشركات ---
+            { code: 'AUD-01', name: 'Public Address Amplifier 120W Bluetooth/USB/FM', category: 'أنظمة صوتية', cost: 3200, price: 4400, stock: 4, minStock: 1 },
+            { code: 'AUD-02', name: 'Public Address Heavy Duty Amplifier 240W Enterprise', category: 'أنظمة صوتية', cost: 5500, price: 7200, stock: 2, minStock: 1 },
+            { code: 'AUD-03', name: 'Ceiling Speaker 6W High Quality (سماعة سقف للمكاتب)', category: 'أنظمة صوتية', cost: 220, price: 350, stock: 40, minStock: 10 },
+            { code: 'AUD-04', name: 'Wall Mount Speaker 30W Outdoor (سماعة حائط للمصانع والشركات)', category: 'أنظمة صوتية', cost: 650, price: 950, stock: 20, minStock: 5 },
+
+            // --- شبكات، سويتشات، كبائن Rack، وكابلات ومستلزمات الربط ---
+            { code: 'CBL-01', name: 'RG59 Coaxial Cable with Power (لفة 100 متر)', category: 'أسلاك وملحقات', cost: 750, price: 1100, stock: 18, minStock: 5 },
+            { code: 'CBL-02', name: 'Cat6 UTP Outdoor Copper Cable 305m (كابل شبكة نحاس مصمت)', category: 'أسلاك وملحقات', cost: 2400, price: 3200, stock: 10, minStock: 3 },
+            { code: 'CBL-03', name: 'Cat6 FTP Shielded Cable 305m (كابل شبكة معزول للشركات)', category: 'أسلاك وملحقات', cost: 3100, price: 4100, stock: 8, minStock: 2 },
+            { code: 'PWR-01', name: 'Metal Power Supply Box 9 Channel 12V 10A', category: 'أسلاك وملحقات', cost: 650, price: 950, stock: 15, minStock: 3 },
+            { code: 'PWR-02', name: 'Metal Power Supply Box 18 Channel 12V 20A', category: 'أسلاك وملحقات', cost: 1100, price: 1550, stock: 10, minStock: 2 },
+            { code: 'NET-01', name: 'TP-Link 8-Port Gigabit PoE Switch', category: 'أسلاك وملحقات', cost: 1350, price: 1850, stock: 8, minStock: 2 },
+            { code: 'NET-02', name: 'Ruijie / Dahua 16-Port Smart Managed PoE Switch', category: 'أسلاك وملحقات', cost: 3800, price: 4900, stock: 4, minStock: 1 },
+            { code: 'NET-03', name: 'Ruijie 24-Port Gigabit PoE Switch + 2 SFP Ports', category: 'أسلاك وملحقات', cost: 6200, price: 7900, stock: 3, minStock: 1 },
+            { code: 'RK-01', name: 'Rack Cabinet 6U Wall Mount Glass Door', category: 'أسلاك وملحقات', cost: 1200, price: 1650, stock: 8, minStock: 2 },
+            { code: 'RK-02', name: 'Rack Cabinet 9U Glass Door 600x450', category: 'أسلاك وملحقات', cost: 1800, price: 2450, stock: 5, minStock: 2 },
+            { code: 'RK-03', name: 'Rack Cabinet 12U Wall Mount 600x600', category: 'أسلاك وملحقات', cost: 2600, price: 3400, stock: 4, minStock: 1 },
+            { code: 'RK-04', name: 'Rack Cabinet 22U / 42U Server Rack Floor Standing', category: 'أسلاك وملحقات', cost: 8500, price: 11000, stock: 2, minStock: 1 },
+            { code: 'ACC-03', name: 'Patch Panel 24-Port Cat6 with Keystones', category: 'أسلاك وملحقات', cost: 950, price: 1350, stock: 10, minStock: 3 },
+            { code: 'ACC-04', name: 'BNC Connectors + Power Jacks Pack (100 Pcs)', category: 'أسلاك وملحقات', cost: 350, price: 550, stock: 30, minStock: 5 },
+            { code: 'ACC-05', name: 'HDMI Cable High Speed 10m / 15m / 20m', category: 'أسلاك وملحقات', cost: 300, price: 480, stock: 25, minStock: 5 }
+        ];
+
+        // State Storage
+        let inventory = JSON.parse(localStorage.getItem('gcs_inventory')) || initialInventory;
+        let invoices = JSON.parse(localStorage.getItem('gcs_invoices')) || [];
+        let quotations = JSON.parse(localStorage.getItem('gcs_quotations')) || [];
+        let maintenanceOrders = JSON.parse(localStorage.getItem('gcs_maintenance')) || [];
+
+        // App Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('inv-date').value = today;
+            document.getElementById('quote-date').value = today;
+
+            // Generate IDs
+            document.getElementById('inv-number-display').innerText = 'INV-' + (1001 + invoices.length);
+            document.getElementById('quote-number-display').innerText = 'QT-' + (8001 + quotations.length);
+
+            // Add Initial Rows
+            addInvoiceRow();
+            addQuoteRow();
+
+            // Render Tables
+            renderInventoryTable();
+            renderAccountsTable();
+            renderMaintenanceTable();
+        });
+
+        function saveState() {
+            localStorage.setItem('gcs_inventory', JSON.stringify(inventory));
+            localStorage.setItem('gcs_invoices', JSON.stringify(invoices));
+            localStorage.setItem('gcs_quotations', JSON.stringify(quotations));
+            localStorage.setItem('gcs_maintenance', JSON.stringify(maintenanceOrders));
+        }
+
+        // --- TAB NAVIGATION ---
+        function switchTab(tabId) {
+            ['invoice', 'quotation', 'inventory', 'maintenance', 'accounts'].forEach(id => {
+                document.getElementById(`section-${id}`).classList.add('hidden');
+                document.getElementById(`tab-${id}`).className = "px-3 py-2 rounded-lg transition text-slate-300 hover:text-white";
+            });
+
+            document.getElementById(`section-${tabId}`).classList.remove('hidden');
+            let activeTabBtn = document.getElementById(`tab-${tabId}`);
+            if (tabId === 'invoice') activeTabBtn.className = "px-3 py-2 rounded-lg transition bg-blue-600 text-white shadow font-bold";
+            else if (tabId === 'quotation') activeTabBtn.className = "px-3 py-2 rounded-lg transition bg-amber-600 text-slate-950 shadow font-bold";
+            else if (tabId === 'inventory') activeTabBtn.className = "px-3 py-2 rounded-lg transition bg-emerald-600 text-white shadow font-bold";
+            else if (tabId === 'maintenance') activeTabBtn.className = "px-3 py-2 rounded-lg transition bg-indigo-600 text-white shadow font-bold";
+            else if (tabId === 'accounts') activeTabBtn.className = "px-3 py-2 rounded-lg transition bg-purple-600 text-white shadow font-bold";
+        }
+
+        // --- INVOICE FUNCTIONS ---
+        function addInvoiceRow() {
+            const tbody = document.getElementById('invoice-items-body');
+            const rowCount = tbody.children.length + 1;
+            const tr = document.createElement('tr');
+            tr.className = "border-b border-slate-200 text-xs hover:bg-slate-50";
+            
+            let optionsHtml = '<option value="">-- اختر المنتج من المخزن --</option>';
+            inventory.forEach((item, index) => {
+                optionsHtml += `<option value="${index}">${item.name} (${item.price} ج.م) [متوفر: ${item.stock}]</option>`;
+            });
+
+            tr.innerHTML = `
+                <td class="p-2 border text-center font-bold text-slate-500">${rowCount}</td>
+                <td class="p-2 border">
+                    <select onchange="onInvoiceItemSelect(this)" class="w-full bg-transparent outline-none font-bold text-slate-800">
+                        ${optionsHtml}
+                    </select>
+                </td>
+                <td class="p-2 border">
+                    <input type="text" placeholder="SN-XXXX" class="w-full bg-transparent outline-none font-mono text-center">
+                </td>
+                <td class="p-2 border text-center">
+                    <input type="number" value="1" min="1" oninput="calculateTotals()" class="w-12 text-center bg-transparent outline-none font-bold">
+                </td>
+                <td class="p-2 border text-center">
+                    <input type="number" value="0" oninput="calculateTotals()" class="w-20 text-center bg-transparent outline-none font-bold">
+                </td>
+                <td class="p-2 border text-center font-extrabold text-slate-900 item-total">0.00</td>
+                <td class="p-2 border text-center no-print">
+                    <button onclick="removeRow(this)" class="text-red-500 font-bold hover:text-red-700">✕</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        }
+
+        function onInvoiceItemSelect(selectElem) {
+            const row = selectElem.closest('tr');
+            const itemIndex = selectElem.value;
+            if (itemIndex !== "") {
+                const item = inventory[itemIndex];
+                row.cells[4].querySelector('input').value = item.price;
+            } else {
+                row.cells[4].querySelector('input').value = 0;
+            }
+            calculateTotals();
+        }
+
+        function removeRow(btn) {
+            const row = btn.closest('tr');
+            row.remove();
+            calculateTotals();
+        }
+
+        function calculateTotals() {
+            let totalDevices = 0;
+            let totalCost = 0;
+            const rows = document.querySelectorAll('#invoice-items-body tr');
+
+            rows.forEach(row => {
+                const select = row.cells[1].querySelector('select');
+                const qty = parseFloat(row.cells[3].querySelector('input').value) || 0;
+                const price = parseFloat(row.cells[4].querySelector('input').value) || 0;
+                const total = qty * price;
+                row.querySelector('.item-total').innerText = total.toFixed(2);
+                totalDevices += total;
+
+                if (select.value !== "") {
+                    const item = inventory[select.value];
+                    totalCost += (item.cost * qty);
+                }
+            });
+
+            const cables = parseFloat(document.getElementById('cost-cables').value) || 0;
+            const installation = parseFloat(document.getElementById('cost-installation').value) || 0;
+            const servicesTotal = cables + installation;
+            const grandTotal = totalDevices + servicesTotal;
+            const paid = parseFloat(document.getElementById('paid-amount').value) || 0;
+            const remaining = grandTotal - paid;
+
+            document.getElementById('sum-devices').innerText = totalDevices.toFixed(2) + ' ج.م';
+            document.getElementById('sum-services').innerText = servicesTotal.toFixed(2) + ' ج.م';
+            document.getElementById('sum-grand-total').innerText = grandTotal.toFixed(2) + ' ج.م';
+            document.getElementById('remaining-amount').innerText = remaining.toFixed(2) + ' ج.م';
+
+            return { totalDevices, servicesTotal, grandTotal, paid, remaining, totalCost };
+        }
+
+        function saveOnlyInvoice() {
+            const custName = document.getElementById('cust-name').value;
+            if (!custName) {
+                alert('يرجى إدخال اسم العميل أولاً');
+                return false;
+            }
+
+            const totals = calculateTotals();
+            const invNumber = document.getElementById('inv-number-display').innerText;
+            const invDate = document.getElementById('inv-date').value;
+
+            // Deduct from stock
+            const rows = document.querySelectorAll('#invoice-items-body tr');
+            rows.forEach(row => {
+                const select = row.cells[1].querySelector('select');
+                const qty = parseFloat(row.cells[3].querySelector('input').value) || 0;
+                if (select.value !== "") {
+                    inventory[select.value].stock -= qty;
+                }
+            });
+
+            const invoiceRecord = {
+                id: invNumber,
+                date: invDate,
+                customer: custName,
+                phone: document.getElementById('cust-phone').value,
+                address: document.getElementById('cust-address').value,
+                grandTotal: totals.grandTotal,
+                paid: totals.paid,
+                remaining: totals.remaining,
+                profit: totals.grandTotal - totals.totalCost
+            };
+
+            invoices.push(invoiceRecord);
+            saveState();
+            renderInventoryTable();
+            renderAccountsTable();
+            alert('تم حفظ الفاتورة بنجاح وخصم الأصناف من المخزن وتنزيلها في الحسابات!');
+            return true;
+        }
+
+        function saveAndPrintInvoice() {
+            if (saveOnlyInvoice()) {
+                window.print();
+            }
+        }
+
+        function resetInvoiceForm() {
+            document.getElementById('cust-name').value = '';
+            document.getElementById('cust-phone').value = '';
+            document.getElementById('cust-address').value = '';
+            document.getElementById('cost-cables').value = '0';
+            document.getElementById('cost-installation').value = '0';
+            document.getElementById('paid-amount').value = '0';
+            document.getElementById('invoice-items-body').innerHTML = '';
+            addInvoiceRow();
+            calculateTotals();
+        }
+
+        // --- QUOTATION FUNCTIONS ---
+        function addQuoteRow() {
+            const tbody = document.getElementById('quote-items-body');
+            const rowCount = tbody.children.length + 1;
+            const tr = document.createElement('tr');
+            tr.className = "border-b border-amber-200 text-xs hover:bg-amber-50/40";
+            
+            let optionsHtml = '<option value="">-- اختر الصنف --</option>';
+            inventory.forEach((item, index) => {
+                optionsHtml += `<option value="${index}">${item.name}</option>`;
+            });
+
+            tr.innerHTML = `
+                <td class="p-2 border text-center font-bold text-slate-500">${rowCount}</td>
+                <td class="p-2 border">
+                    <select onchange="onQuoteItemSelect(this)" class="w-full bg-transparent outline-none font-bold text-slate-800">
+                        ${optionsHtml}
+                    </select>
+                </td>
+                <td class="p-2 border text-center">
+                    <input type="number" value="1" min="1" oninput="calculateQuoteTotals()" class="w-12 text-center bg-transparent outline-none font-bold">
+                </td>
+                <td class="p-2 border text-center">
+                    <input type="number" value="0" oninput="calculateQuoteTotals()" class="w-20 text-center bg-transparent outline-none font-bold">
+                </td>
+                <td class="p-2 border text-center font-extrabold text-slate-900 quote-item-total">0.00</td>
+                <td class="p-2 border text-center no-print">
+                    <button onclick="removeRow(this)" class="text-red-500 font-bold hover:text-red-700">✕</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        }
+
+        function onQuoteItemSelect(selectElem) {
+            const row = selectElem.closest('tr');
+            const itemIndex = selectElem.value;
+            if (itemIndex !== "") {
+                const item = inventory[itemIndex];
+                row.cells[3].querySelector('input').value = item.price;
+            } else {
+                row.cells[3].querySelector('input').value = 0;
+            }
+            calculateQuoteTotals();
+        }
+
+        function calculateQuoteTotals() {
+            let totalDevices = 0;
+            const rows = document.querySelectorAll('#quote-items-body tr');
+
+            rows.forEach(row => {
+                const qty = parseFloat(row.cells[2].querySelector('input').value) || 0;
+                const price = parseFloat(row.cells[3].querySelector('input').value) || 0;
+                const total = qty * price;
+                row.querySelector('.quote-item-total').innerText = total.toFixed(2);
+                totalDevices += total;
+            });
+
+            const cables = parseFloat(document.getElementById('quote-cables').value) || 0;
+            const installation = parseFloat(document.getElementById('quote-installation').value) || 0;
+            const servicesTotal = cables + installation;
+            const grandTotal = totalDevices + servicesTotal;
+
+            document.getElementById('quote-sum-devices').innerText = totalDevices.toFixed(2) + ' ج.م';
+            document.getElementById('quote-sum-services').innerText = servicesTotal.toFixed(2) + ' ج.م';
+            document.getElementById('quote-sum-grand').innerText = grandTotal.toFixed(2) + ' ج.م';
+        }
+
+        function printQuotation() {
+            window.print();
+        }
+
+        function convertQuotationToInvoice() {
+            document.getElementById('cust-name').value = document.getElementById('quote-cust-name').value;
+            document.getElementById('cust-phone').value = document.getElementById('quote-cust-phone').value;
+            document.getElementById('cust-address').value = document.getElementById('quote-cust-address').value;
+            document.getElementById('cost-cables').value = document.getElementById('quote-cables').value;
+            document.getElementById('cost-installation').value = document.getElementById('quote-installation').value;
+
+            switchTab('invoice');
+            alert('تم نقل بيانات عرض السعر إلى فاتورة المبيعات بنجاح!');
+        }
+
+        function resetQuotationForm() {
+            document.getElementById('quote-cust-name').value = '';
+            document.getElementById('quote-cust-phone').value = '';
+            document.getElementById('quote-cust-address').value = '';
+            document.getElementById('quote-cables').value = '0';
+            document.getElementById('quote-installation').value = '0';
+            document.getElementById('quote-items-body').innerHTML = '';
+            addQuoteRow();
+            calculateQuoteTotals();
+        }
+
+        // --- INVENTORY FUNCTIONS ---
+        function renderInventoryTable() {
+            const tbody = document.getElementById('inventory-table-body');
+            const search = (document.getElementById('inv-search')?.value || '').toLowerCase();
+            const catFilter = document.getElementById('inv-category-filter')?.value || 'all';
+            tbody.innerHTML = '';
+
+            let totalItems = 0;
+            let totalCostVal = 0;
+            let lowStockCount = 0;
+
+            // Group items by Category
+            const categories = [
+                'كاميرات مراقبة',
+                'أجهزة تسجيل NVR/DVR',
+                'سنترالات وهواتف',
+                'أجهزة بصمة',
+                'أنظمة إنتركم',
+                'أنظمة صوتية',
+                'كمبيوتر وشاشات',
+                'أسلاك وملحقات'
+            ];
+
+            categories.forEach(cat => {
+                if (catFilter !== 'all' && catFilter !== cat) return;
+
+                const catItems = inventory.map((item, originalIndex) => ({ ...item, originalIndex }))
+                    .filter(item => item.category === cat && (item.name.toLowerCase().includes(search) || item.code.toLowerCase().includes(search)));
+
+                if (catItems.length > 0) {
+                    // Category Section Header Row
+                    const headerTr = document.createElement('tr');
+                    headerTr.className = "bg-slate-200 text-slate-900 font-extrabold border-y-2 border-slate-400";
+                    headerTr.innerHTML = `
+                        <td colspan="9" class="p-2 text-right text-xs md:text-sm bg-slate-200">
+                            📂 ${cat} <span class="text-slate-600 font-normal text-xs">(${catItems.length} صنف)</span>
+                        </td>
+                    `;
+                    tbody.appendChild(headerTr);
+
+                    catItems.forEach(item => {
+                        totalItems++;
+                        totalCostVal += (item.cost * item.stock);
+                        if (item.stock <= item.minStock) lowStockCount++;
+
+                        const statusClass = item.stock <= 0 ? 'bg-red-100 text-red-700' : (item.stock <= item.minStock ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700');
+                        const statusText = item.stock <= 0 ? 'نفد المخزون' : (item.stock <= item.minStock ? 'حد إعادة الطلب' : 'متوفر');
+
+                        const tr = document.createElement('tr');
+                        tr.className = "hover:bg-blue-50/50 border-b transition";
+                        tr.innerHTML = `
+                            <td class="p-3 font-mono font-bold text-blue-700">${item.code}</td>
+                            <td class="p-3 font-bold text-slate-800">${item.name}</td>
+                            <td class="p-3 text-slate-600 text-xs font-semibold">${item.category}</td>
+                            <td class="p-3 font-bold text-slate-700">${item.cost.toFixed(2)} ج.م</td>
+                            <td class="p-3 font-bold text-blue-900">${item.price.toFixed(2)} ج.م</td>
+                            <td class="p-3 font-bold text-emerald-700">${(item.price - item.cost).toFixed(2)} ج.م</td>
+                            <td class="p-3 text-center font-black text-slate-800 text-base">${item.stock}</td>
+                            <td class="p-3 text-center"><span class="px-2.5 py-1 rounded-full text-xs font-bold ${statusClass}">${statusText}</span></td>
+                            <td class="p-3 text-center space-x-1 space-x-reverse">
+                                <button onclick="editProduct(${item.originalIndex})" class="bg-amber-500 hover:bg-amber-600 text-white px-2 py-1 rounded text-xs font-bold shadow">✏️ تعديل</button>
+                                <button onclick="deleteProduct(${item.originalIndex})" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs font-bold shadow">🗑️ حذف</button>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            });
+
+            document.getElementById('inv-total-items-count').innerText = totalItems + ' صنف';
+            document.getElementById('inv-total-cost-val').innerText = totalCostVal.toFixed(2) + ' ج.م';
+            document.getElementById('inv-low-stock-count').innerText = lowStockCount + ' صنف';
+        }
+
+        function openAddProductModal() {
+            document.getElementById('modal-product-title').innerText = "إضافة صنف جديد للمخزن";
+            document.getElementById('prod-edit-index').value = "-1";
+            document.getElementById('prod-code').value = 'ITEM-' + (inventory.length + 1);
+            document.getElementById('prod-name').value = '';
+            document.getElementById('prod-cost').value = '0';
+            document.getElementById('prod-price').value = '0';
+            document.getElementById('prod-stock').value = '10';
+            document.getElementById('prod-min').value = '3';
+            document.getElementById('modal-product').classList.remove('hidden');
+        }
+
+        function editProduct(index) {
+            const item = inventory[index];
+            document.getElementById('modal-product-title').innerText = "✏️ تعديل الصنف والتسعير: " + item.name;
+            document.getElementById('prod-edit-index').value = index;
+            document.getElementById('prod-code').value = item.code;
+            document.getElementById('prod-name').value = item.name;
+            document.getElementById('prod-category').value = item.category;
+            document.getElementById('prod-cost').value = item.cost;
+            document.getElementById('prod-price').value = item.price;
+            document.getElementById('prod-stock').value = item.stock;
+            document.getElementById('prod-min').value = item.minStock;
+            document.getElementById('modal-product').classList.remove('hidden');
+        }
+
+        function closeProductModal() { document.getElementById('modal-product').classList.add('hidden'); }
+
+        function saveProductItem() {
+            const editIndex = parseInt(document.getElementById('prod-edit-index').value);
+            const code = document.getElementById('prod-code').value || ('ITEM-' + (inventory.length + 1));
+            const name = document.getElementById('prod-name').value;
+            const category = document.getElementById('prod-category').value;
+            const cost = parseFloat(document.getElementById('prod-cost').value) || 0;
+            const price = parseFloat(document.getElementById('prod-price').value) || 0;
+            const stock = parseInt(document.getElementById('prod-stock').value) || 0;
+            const minStock = parseInt(document.getElementById('prod-min').value) || 3;
+
+            if (!name) { alert('يرجى إدخال اسم الصنف'); return; }
+
+            if (editIndex >= 0) {
+                // Update Existing
+                inventory[editIndex] = { code, name, category, cost, price, stock, minStock };
+                alert('تم تعديل أسعار وبيانات الصنف بنجاح!');
+            } else {
+                // Add New
+                inventory.push({ code, name, category, cost, price, stock, minStock });
+                alert('تم إضافة المنتج للمخزن بنجاح!');
+            }
+
+            saveState();
+            renderInventoryTable();
+            closeProductModal();
+        }
+
+        function deleteProduct(index) {
+            if (confirm('هل أنت تأكد من حذف هذا الصنف من المخزن؟')) {
+                inventory.splice(index, 1);
+                saveState();
+                renderInventoryTable();
+            }
+        }
+
+        // Force reset inventory to full default database
+        function resetToFullDefaultInventory() {
+            if (confirm('هل تريد إعادة تحميل قائمة مخزن شركة GCS الشاملة بجميع الأصناف والملحقات الجديدة؟')) {
+                inventory = [...initialInventory];
+                saveState();
+                renderInventoryTable();
+                alert('تم تحديث المخزن بنجاح وإضافة جميع أصناف ومستلزمات الشركات المتكاملة!');
+            }
+        }
+
+        // --- MAINTENANCE FUNCTIONS ---
+        function renderMaintenanceTable() {
+            const tbody = document.getElementById('maintenance-table-body');
+            const search = (document.getElementById('maint-search')?.value || '').toLowerCase();
+            tbody.innerHTML = '';
+
+            maintenanceOrders.forEach((m, index) => {
+                if (m.customer.toLowerCase().includes(search) || m.tech.toLowerCase().includes(search)) {
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-slate-50 border-b";
+                    tr.innerHTML = `
+                        <td class="p-3 font-mono font-bold text-red-600">${m.id}</td>
+                        <td class="p-3 text-slate-600">${m.date}</td>
+                        <td class="p-3 font-bold text-slate-800">${m.customer}</td>
+                        <td class="p-3 text-slate-700">${m.tech}</td>
+                        <td class="p-3 text-slate-600">${m.reason}</td>
+                        <td class="p-3 text-slate-700 font-bold">${m.warranty}</td>
+                        <td class="p-3 font-bold text-blue-700">${m.cost.toFixed(2)} ج.م</td>
+                        <td class="p-3 text-center"><button onclick="printMaintenanceReport(${index})" class="bg-slate-800 text-white px-2.5 py-1 rounded text-xs font-bold">🖨️ طباعة</button></td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            });
+        }
+
+        function openAddMaintenanceModal() { document.getElementById('modal-maintenance').classList.remove('hidden'); }
+        function closeMaintenanceModal() { document.getElementById('modal-maintenance').classList.add('hidden'); }
+
+        function saveMaintenanceOrder() {
+            const cust = document.getElementById('maint-cust-name').value;
+            if (!cust) { alert('يرجى إدخال اسم العميل'); return; }
+
+            const order = {
+                id: 'MAINT-' + (5001 + maintenanceOrders.length),
+                date: new Date().toISOString().split('T')[0],
+                customer: cust,
+                phone: document.getElementById('maint-cust-phone').value,
+                address: document.getElementById('maint-cust-addr').value,
+                tech: document.getElementById('maint-tech').value,
+                warranty: document.getElementById('maint-warranty').value,
+                reason: document.getElementById('maint-reason').value,
+                sn: document.getElementById('maint-sn').value,
+                parts: document.getElementById('maint-parts').value,
+                cost: parseFloat(document.getElementById('maint-cost').value) || 0
+            };
+
+            maintenanceOrders.push(order);
+            saveState();
+            renderMaintenanceTable();
+            closeMaintenanceModal();
+            alert('تم تسجيل أمر الصيانة بنجاح!');
+        }
+
+        function printMaintenanceReport(index) {
+            const m = maintenanceOrders[index];
+            document.getElementById('p-maint-id').innerText = m.id;
+            document.getElementById('p-maint-date').innerText = 'التاريخ: ' + m.date;
+            document.getElementById('p-maint-cust').innerText = m.customer;
+            document.getElementById('p-maint-phone').innerText = m.phone;
+            document.getElementById('p-maint-address').innerText = m.address;
+            document.getElementById('p-maint-tech').innerText = m.tech;
+            document.getElementById('p-maint-warranty').innerText = m.warranty;
+            document.getElementById('p-maint-reason').innerText = m.reason;
+            document.getElementById('p-maint-sn').innerText = m.sn || 'لا يوجد';
+            document.getElementById('p-maint-parts').innerText = m.parts || 'لا يوجد';
+            document.getElementById('p-maint-total').innerText = m.cost.toFixed(2) + ' ج.م';
+
+            document.getElementById('printable-maintenance-report').classList.remove('hidden');
+            window.print();
+            document.getElementById('printable-maintenance-report').classList.add('hidden');
+        }
+
+        // --- ACCOUNTS FUNCTIONS ---
+        function renderAccountsTable() {
+            const tbody = document.getElementById('accounts-table-body');
+            const search = (document.getElementById('search-input')?.value || '').toLowerCase();
+            tbody.innerHTML = '';
+
+            let totalSales = 0;
+            let totalPaid = 0;
+            let totalRemaining = 0;
+            let netProfit = 0;
+
+            invoices.forEach((inv, index) => {
+                totalSales += inv.grandTotal;
+                totalPaid += inv.paid;
+                totalRemaining += inv.remaining;
+                netProfit += inv.profit;
+
+                if (inv.customer.toLowerCase().includes(search) || inv.id.toLowerCase().includes(search)) {
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-slate-50 border-b";
+                    tr.innerHTML = `
+                        <td class="p-3 font-mono font-bold text-red-600">${inv.id}</td>
+                        <td class="p-3 text-slate-600">${inv.date}</td>
+                        <td class="p-3 font-bold text-slate-800">${inv.customer}</td>
+                        <td class="p-3 font-bold text-slate-900">${inv.grandTotal.toFixed(2)} ج.م</td>
+                        <td class="p-3 font-bold text-emerald-600">${inv.paid.toFixed(2)} ج.م</td>
+                        <td class="p-3 font-bold text-red-600">${inv.remaining.toFixed(2)} ج.م</td>
+                        <td class="p-3 font-bold text-blue-700">${inv.profit.toFixed(2)} ج.م</td>
+                        <td class="p-3 text-center"><button onclick="deleteInvoice(${index})" class="text-red-500 font-bold hover:text-red-700">حذف</button></td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            });
+
+            document.getElementById('dash-total-sales').innerText = totalSales.toFixed(2) + ' ج.م';
+            document.getElementById('dash-total-paid').innerText = totalPaid.toFixed(2) + ' ج.م';
+            document.getElementById('dash-total-remaining').innerText = totalRemaining.toFixed(2) + ' ج.م';
+            document.getElementById('dash-net-profit').innerText = netProfit.toFixed(2) + ' ج.م';
+        }
+
+        function deleteInvoice(index) {
+            if (confirm('هل أنت تأكد من حذف هذه الفاتورة من الأرشيف والحسابات؟')) {
+                invoices.splice(index, 1);
+                saveState();
+                renderAccountsTable();
+            }
+        }
+    </script>
+</body>
+</html>
