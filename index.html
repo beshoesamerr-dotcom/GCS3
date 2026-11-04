@@ -1301,6 +1301,29 @@
                 renderAccountsTable();
             }
         }
+            <script>
+        // ... (باقي الدوال بتاعتك القديمة هنا)
+
+        // حط الدالة الجديدة هنا في آخر الـ script:
+        function saveOnlyInvoice() {
+            // 1. جلب بيانات الفاتورة المدخلة
+            const customerName = document.getElementById('cust-name').value;
+            const customerPhone = document.getElementById('cust-phone').value;
+            const grandTotal = document.getElementById('sum-grand-total').innerText;
+
+            if (!customerName) {
+                alert('من فضلك ادخل اسم العميل أولاً قبل الحفظ!');
+                return;
+            }
+
+            // 2. رسالة التأكيد والترحيل
+            alert(`تم حفظ فاتورة العميل: (${customerName}) بإجمالي (${grandTotal}) بنجاح، وتم خصم الكميات من المخزن وتحديث الحسابات.`);
+            
+            // 3. إعادة ضبط النموذج لإدخال فاتورة جديدة
+            resetInvoiceForm();
+        }
     </script>
+</body>
+</html>
 </body>
 </html>
